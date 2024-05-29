@@ -29,6 +29,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "1task", "1task", "{74A86D30
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "task1", "27_05\task1\task1.vcxproj", "{5EF31761-54B1-4AA3-B06F-5353A1408CF0}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Lib", "Lib", "{397CD308-492F-41B4-A359-0DD91442A36A}"
+	ProjectSection(SolutionItems) = preProject
+		lib.h = lib.h
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
