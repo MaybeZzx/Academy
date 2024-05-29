@@ -1,7 +1,6 @@
 #include "../../lib.h"
 #include <ctype.h>
 
-using namespace std;
 
 void ReplaceWord(string &str, string lastWord, string newWord)
 {

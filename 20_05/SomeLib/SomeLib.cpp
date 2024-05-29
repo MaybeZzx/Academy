@@ -1,7 +1,6 @@
-#include <iostream>
+#include "../../lib.h"
 #include <iomanip>
 #include <cmath>
-using namespace std;
 
 int mystrcmp(const char* str1, const char* str2)
 {
