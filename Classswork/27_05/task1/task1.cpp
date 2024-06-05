@@ -1,8 +1,11 @@
-#include "../../lib.h"
+#include <iostream>
+#include <algorithm>
 #include <ctype.h>
+#include <string>
+#include <map>
 
 
-void ReplaceWord(string &str, string lastWord, string newWord)
+void ReplaceWord(std::string &str, std::string lastWord, std::string newWord)
 {
     while (str.find(lastWord) != -1)
     {
@@ -10,7 +13,7 @@ void ReplaceWord(string &str, string lastWord, string newWord)
         str.erase(str.find(lastWord), lastWord.length()); // Находим и удаляем старое слово
     }
 }
-void TextToUpper(string &str)
+void TextToUpper(std::string &str)
 {
     bool mark = false;
     for (int i = 0; i < str.length(); i++)
@@ -27,11 +30,11 @@ void TextToUpper(string &str)
         }
     }
 }
-void CountLetters(string& str)
+void CountLetters(std::string& str)
 {
-    map<char, int> letters;
+    std::map<char, int> letters;
     transform(str.begin(), str.end(), str.begin(), tolower);
-    cout << str << endl;
+    std::cout << str << std::endl;
     for (int i = 0; i < str.length(); i++)
     {
         if (isalpha(str[i]) && letters.contains(str[i]))
@@ -48,12 +51,12 @@ void CountLetters(string& str)
     }
     for (auto [letter, num] : letters)
     {
-        cout << letter << ": " << num << endl;
+        std::cout << letter << ": " << num << std::endl;
     }
 }
-void CountDigits(string& str)
+void CountDigits(std::string& str)
 {
-    map<char, int> digits;
+    std::map<char, int> digits;
     for (int i = 0; i < str.length(); i++)
     {
         if (isdigit(str[i]) && digits.contains(str[i]))
@@ -71,18 +74,18 @@ void CountDigits(string& str)
     }
     if (digits.empty())
     {
-        cout << "В строке нет цифр" << endl;
+        std::cout << "В строке нет цифр" << std::endl;
         return;
     }
     for (auto [digit, num] : digits)
     {
-        cout << digit << ": " << num << endl;
+        std::cout << digit << ": " << num << std::endl;
     }
 }
 int main()
 {
     setlocale(LC_ALL, "RUS");
-    string str1 = "Hello hello. world.";
+    std::string str1 = "Hello hello. world.";
     /*ReplaceWord(str1, "hello", "world");
     cout << str1 << endl;
     TextToUpper(str1);*/

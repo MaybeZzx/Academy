@@ -1,4 +1,4 @@
-#include "../../lib.h"
+#include <iostream>
 #include <iomanip>
 #include <cmath>
 
@@ -140,6 +140,6 @@ int main()
 	const char strToUppercase[] = { "hello world" };
 	const char strToLowercase[] = { "HELLO WORLD" };
 	int numToString = -550;
-	cout << mystrrev(str);
+	std::cout << mystrrev(str);
 
 }
