@@ -1,2 +1,2 @@
 #pragma once
-int FindPerfectNum(int start, int end);
+void FindPerfectNum(int start, int end);

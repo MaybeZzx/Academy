@@ -14,6 +14,7 @@ int main()
 	std::cout << "Введите конец диапазона: ";
 	int end;
 	std::cin >> end;
-	std::cout << "Результат: " << FindPerfectNum(start, end) << std::endl;
+	std::cout << "Результат: ";
+	FindPerfectNum(start, end);
 	
 }
