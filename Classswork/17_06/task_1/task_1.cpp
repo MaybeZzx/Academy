@@ -18,6 +18,7 @@ struct WashingMachine {
 	}
 
 private:
+	std::string brand, color;
 	int width, length, height, power, spinSpeed, temperature;
 	void CheckInfo() {
 		if (width < 0) width = 0;
@@ -29,7 +30,6 @@ private:
 	}
 
 public:
-	std::string brand, color;
 	void Show()
 	{
 		std::cout << "======================================" << std::endl;
