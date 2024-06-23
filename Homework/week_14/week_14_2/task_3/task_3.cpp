@@ -2,6 +2,7 @@
 #include "Func.h"
 
 int main() {
+    srand(time(NULL));
     setlocale(LC_ALL, "rus");
     const int n = 20;
     int arr[n];

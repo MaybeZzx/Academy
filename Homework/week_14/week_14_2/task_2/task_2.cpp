@@ -3,6 +3,7 @@
 
 int main()
 {
+	srand(time(NULL));
 	setlocale(LC_ALL, "rus");
 	int size = 10;
 	int* arr = new int[size];
