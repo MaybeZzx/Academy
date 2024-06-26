@@ -86,8 +86,8 @@ int main()
 {
     setlocale(LC_ALL, "RUS");
     std::string str1 = "Hello hello. world.";
-    /*ReplaceWord(str1, "hello", "world");
-    cout << str1 << endl;
-    TextToUpper(str1);*/
+    ReplaceWord(str1, "hello", "world");
+    TextToUpper(str1);
+    std::cout << str1 << std::endl;
     CountDigits(str1);
 }
