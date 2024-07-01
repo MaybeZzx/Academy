@@ -1,18 +1,19 @@
 #include <iostream>
 #include <vector>
+#include <string>
 #include "Func.h"
 
 int main()
 
 {
-	std::vector<int> matrix(5);
-	AddRow(matrix, 5);
-	for (int i = 0; i < 5; i++)
+	std::vector<std::vector<std::string>> matrix = { {"hello", "world"}, {"test", "test_"} };
+	std::vector<std::string> newString = { "new", "string" };
+	AddRow(matrix, newString);
+	for (int i = 0; i < matrix.size(); ++i)
 	{
-		for (int j = 0; j < 5; j++)
+		for (int j = 0; j < matrix.size(); ++j)
 		{
-			matrix[i, j] = 0;
-			std::cout << matrix[i, j] << " ";
+			std::cout << matrix[i][j] << " ";
 		}
 		std::cout << std::endl;
 	}
