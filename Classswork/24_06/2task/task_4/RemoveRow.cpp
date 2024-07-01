@@ -9,7 +9,7 @@ int RemoveRow(std::vector<std::vector<std::string>>& matrix, int pos)
 	}
 	else
 	{
-		return -1;
+		return 1;
 	}
 	return 0;
 
