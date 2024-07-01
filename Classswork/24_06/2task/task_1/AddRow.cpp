@@ -1,7 +1,7 @@
 #include <vector>
+#include <string>
 
-template <typename T>
-void AddRow(std::vector<std::vector<T>>& matrix, std::vector<T> newString)
+void AddRow(std::vector<std::vector<std::string>>& matrix, std::vector<std::string> newString)
 {
 	matrix.push_back(newString);
 }

@@ -23,7 +23,7 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Func.h">
+    <ClInclude Include="AddRow.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
   </ItemGroup>

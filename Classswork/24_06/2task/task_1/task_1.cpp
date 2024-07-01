@@ -1,7 +1,7 @@
 #include <iostream>
 #include <vector>
 #include <string>
-#include "Func.h"
+#include "AddRow.h"
 
 int main()
 
@@ -9,11 +9,10 @@ int main()
 	std::vector<std::vector<std::string>> matrix = { {"hello", "world"}, {"test", "test_"} };
 	std::vector<std::string> newString = { "new", "string" };
 	AddRow(matrix, newString);
-	for (int i = 0; i < matrix.size(); ++i)
-	{
-		for (int j = 0; j < matrix.size(); ++j)
-		{
-			std::cout << matrix[i][j] << " ";
+
+	for (const auto& subArr : matrix) {
+		for (const auto& str : subArr) {
+			std::cout << str << " ";
 		}
 		std::cout << std::endl;
 	}

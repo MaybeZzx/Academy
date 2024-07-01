@@ -134,7 +134,7 @@
     <ClCompile Include="task_1.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Func.h" />
+    <ClInclude Include="AddRow.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
