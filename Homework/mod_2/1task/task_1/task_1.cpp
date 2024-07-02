@@ -9,6 +9,6 @@ int main()
 	FillMatrix(matrix, 5, 5);
 
 	std::cout << "\n==============================\n" << std::endl;
-	MoveElement(matrix, direction::Left);
+	MoveElement(matrix, direction::Down, 2);
 	PrintMatrix(matrix, 5, 5);
 }

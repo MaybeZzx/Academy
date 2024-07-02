@@ -45,42 +45,63 @@ void RemoveColumn(std::vector<std::vector<int>>& matrix, int pos)
 		matrix[i].erase(matrix[i].begin() + pos);
 	}
 }
-void MoveElement(std::vector<std::vector<int>>& matrix, direction direction)
+void MoveElement(std::vector<std::vector<int>>& matrix, direction direction, int countShift)
 {
 	int temp;
-	int row = matrix.size() - 1;
-	int col = matrix[0].size() - 1;
+	int row = matrix.size();
+	int col = matrix[0].size();
 	switch (direction)
 	{
 	case Up:
+		for (int j = 0; j < col; ++j) {
+			for(int k = 0; k < countShift; ++k)
+			{
+				int temp = matrix[0][j];
+				for (int i = 0; i < row - 1; ++i) {
+					matrix[i][j] = matrix[i + 1][j];
+				}
+				matrix[row - 1][j] = temp;
+			}
+		}
 		break;
 	case Right:
-		for (size_t i = 0; i <row; ++i)
+		for (size_t i = 0; i < row; ++i)
 		{
-			temp = matrix[i][col];
-			for (size_t j = 0; j < col; ++j)
+			for (int k = 0; k < countShift; ++k)
 			{
-				std::cout << matrix[i][j] << " " << matrix[i][j + 1] << std::endl;
-				matrix[i][j] = matrix[i][j + 1];
-
+				temp = matrix[i][col - 1];
+				for (size_t j = col - 1; j > 0; --j)
+				{
+					matrix[i][j] = matrix[i][j - 1];
+				}
+				matrix[i][0] = temp;
 			}
-			matrix[i][0] = temp;
-			std::cout << matrix[i][0] << " " << matrix[i][1] << " " << matrix[i][2] << " " << matrix[i][3] << " " << matrix[i][4] << " " << std::endl;
 		}
 		break;
 	case Down:
+		for (int j = 0; j < col; j++) {
+			for (int k = 0; k < countShift; ++k)
+			{
+				int temp = matrix[row - 1][j];
+				for (int i = row - 1; i > 0; i--) {
+					matrix[i][j] = matrix[i - 1][j];
+				}
+				matrix[0][j] = temp;
+			}
+		}
 		break;
 	case Left:
 		for (size_t i = 0; i < row; ++i)
 		{
-			temp = matrix[i][0];
-			for (size_t j = col; j > 0; --j)
+			for (int k = 0; k < countShift; ++k)
 			{
-				std::cout << matrix[i][j] << " " << matrix[i][j - 1] << std::endl;
-				matrix[i][j] = matrix[i][j - 1];
+				temp = matrix[i][0];
+				for (size_t j = 0; j < col - 1; ++j)
+				{
+					matrix[i][j] = matrix[i][j + 1];
+				}
+				matrix[i][col - 1] = temp;
 			}
-			matrix[i][col] = temp;
-			std::cout << matrix[i][0] << " " << matrix[i][1] << " " << matrix[i][2] << " " << matrix[i][3] << " " << matrix[i][4] << " " << std::endl;
 		}
 		break;
 	default:
