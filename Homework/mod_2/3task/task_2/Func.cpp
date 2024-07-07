@@ -27,7 +27,7 @@ void FillMatrix(std::vector<std::vector<int>>& matrix)
     PrintMatrix(matrix);
 }
 
-std::vector<int> FindCommonElements(std::vector<std::vector<int>> const& A, std::vector<std::vector<int>>  const& B, std::vector<std::vector<int>> const& C)
+std::vector<int> FindCommonValues(std::vector<std::vector<int>> const& A, std::vector<std::vector<int>>  const& B, std::vector<std::vector<int>> const& C)
 {
     std::vector<int> commonElements;
     std::set<int> elementB;
@@ -52,7 +52,7 @@ std::vector<int> FindCommonElements(std::vector<std::vector<int>> const& A, std:
     return commonElements;
 }
 
-std::vector<int> FindCommonElements(std::vector<std::vector<int>> const& A, std::vector<std::vector<int>>  const& B)
+std::vector<int> FindCommonValues(std::vector<std::vector<int>> const& A, std::vector<std::vector<int>>  const& B)
 {
     std::vector<int> commonElements;
     std::set<int> elementB;

@@ -22,7 +22,7 @@ int main()
     FillMatrix(C);
 
     std::cout << "Общие элементы: ";
-    std::vector<int> commonValues = FindCommonElements(A, B, C);
+    std::vector<int> commonValues = FindCommonValues(A, B, C);
     PrintArr(commonValues);
     std::cout << "Уникальные элементы: ";
     std::vector<int> uniqueValues = FindUniqueValues(A, B, C);
@@ -30,7 +30,7 @@ int main()
 
 
     std::cout << "Общие элементы А и С: ";
-    std::vector<int> commonValues_AC= FindCommonElements(A, C);
+    std::vector<int> commonValues_AC= FindCommonValues(A, C);
     PrintArr(commonValues_AC);
 
     std::cout << "Отрицательные элементы: ";
