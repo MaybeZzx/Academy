@@ -21,4 +21,5 @@ int main()
     SortByAuthor(Library);
     SortByPublisher(Library);
 
+    delete book;
 }
