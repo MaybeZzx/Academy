@@ -14,7 +14,9 @@ void RemoveChar(std::string& str, char symb)
         {
             str.erase(i, 1);
             if (str.find(symb))
+            {
                 i -= 1;
+            }
         }
     }
 }
@@ -57,11 +59,17 @@ void NumCharacters(std::string const& str)
     {
         temp = (char)(str[i]);
         if (std::isdigit(temp))
+        {
             countNum++;
+        }
         else if (std::isalpha(temp))
+        {
             countLetter++;
+        }
         else
+        {
             countSymbol++;
+        }
     }
     std::cout << "Количество цифр в строке: " << countNum << std::endl;
     std::cout << "Количество букв в строке: " << countLetter << std::endl;

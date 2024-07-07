@@ -5,17 +5,22 @@
 #include <map>
 
 
-void ReplaceWord(std::string &str, std::string lastWord, std::string newWord)
+void ReplaceWord(std::string &str, std::string const& lastWord, std::string const& newWord)
 {
     while (str.find(lastWord) != -1)
     {
-        str.insert(str.find(lastWord), newWord); // Вставляем новое слово перед старым
-        str.erase(str.find(lastWord), lastWord.length()); // Находим и удаляем старое слово
+        str.insert(str.find(lastWord), newWord); 
+        str.erase(str.find(lastWord), lastWord.length()); 
     }
 }
-void TextToUpper(std::string &str)
+
+void SentenceToUpper(std::string &str)
 {
     bool mark = false;
+    if (std::isalpha(str[0]))
+    {
+        str[0] = toupper(str[0]);
+    }
     for (int i = 0; i < str.length(); i++)
     {
         if (isspace(str[i]))
@@ -30,11 +35,11 @@ void TextToUpper(std::string &str)
         }
     }
 }
-void CountLetters(std::string& str)
+
+std::map<char, int> CountLetters(std::string str)
 {
     std::map<char, int> letters;
     transform(str.begin(), str.end(), str.begin(), tolower);
-    std::cout << str << std::endl;
     for (int i = 0; i < str.length(); i++)
     {
         if (isalpha(str[i]) && letters.contains(str[i]))
@@ -46,15 +51,14 @@ void CountLetters(std::string& str)
             letters[str[i]] = 1;
         }
         else
+        {
             continue;
-
+        }
     }
-    for (auto [letter, num] : letters)
-    {
-        std::cout << letter << ": " << num << std::endl;
-    }
+    return letters;
 }
-void CountDigits(std::string& str)
+
+std::map<char, int> CountDigits(std::string const& str)
 {
     std::map<char, int> digits;
     for (int i = 0; i < str.length(); i++)
@@ -72,22 +76,38 @@ void CountDigits(std::string& str)
             continue;
         }
     }
-    if (digits.empty())
-    {
-        std::cout << "В строке нет цифр" << std::endl;
-        return;
-    }
-    for (auto [digit, num] : digits)
-    {
-        std::cout << digit << ": " << num << std::endl;
-    }
+    return digits;
 }
+
 int main()
 {
     setlocale(LC_ALL, "RUS");
-    std::string str1 = "Hello hello. world.";
+    std::string str1 = "hello hello. world. 123";
+    std::cout << "Изначальная строка: " << str1 << std::endl;
+
     ReplaceWord(str1, "hello", "world");
-    TextToUpper(str1);
-    std::cout << str1 << std::endl;
-    CountDigits(str1);
+    std::cout << "Строка после замены слова: " << str1 << std::endl;
+
+    SentenceToUpper(str1);
+    std::cout << "Первая буква предложения в верхнем регистре: " << str1 << std::endl;
+
+    std::cout << "\nЦифры в предложении: " << std::endl;
+    std::map<char, int> digits = CountDigits(str1);
+    if (!digits.empty())
+    {
+        for (auto [digit, num] : digits)
+        {
+            std::cout << digit << ": " << num << std::endl;
+        }
+    }
+
+    std::cout << "\nБуквы в предложении: " << std::endl;
+    std::map<char, int> letters = CountLetters(str1);
+    if (!letters.empty())
+    {
+        for (auto [letter, num] : letters)
+        {
+            std::cout << letter << ": " << num << std::endl;
+        }
+    }
 }
