@@ -24,10 +24,13 @@ void SentenceToUpper(std::string &str)
     for (int i = 0; i < str.length(); i++)
     {
         if (isspace(str[i]))
+        {
             continue;
-
+        }
         if (str[i] == '.' || str[i] == '!' || str[i] == '?')
+        {
             mark = true;
+        }
         else if (mark)
         {
             str[i] = toupper(str[i]);
