@@ -1,21 +1,13 @@
 #include <iostream>
 #include <string>
 
-void RemoveSymbolByIndex(std::string& str)
+void RemoveSymbolByIndex(std::string& str, int index)
 {
-    int index;
-    std::cout << "Введите индекс: ";
-    std::cin >> index;
     str.erase(str.begin() + index);
-    std::cout << "\n" << str << std::endl;
-
 }
-void RemoveChar(std::string& str)
+
+void RemoveChar(std::string& str, char symb)
 {
-    char symb;
-    std::cout << "Введите символ: ";
-    std::cin >> symb;
-    std::cout << str << std::endl;
     for (int i = 0; i < str.length(); ++i)
     {
         if (str[i] == symb)
@@ -24,23 +16,14 @@ void RemoveChar(std::string& str)
             if (str.find(symb))
                 i -= 1;
         }
-        
     }
-    std::cout << "\n" << str << std::endl;
-
 }
-void InsertSymb(std::string& str)
+
+void InsertSymb(std::string& str, int index, char symb)
 {
-    char symb;
-    std::cout << "Введите символ: ";
-    std::cin >> symb;
-    int index;
-    std::cout << "Введите индекс: ";
-    std::cin >> index;
     str.insert(index, 1, symb);
-    std::cout << "\n" << str << std::endl;
-
 }
+
 void ReplacePoint(std::string& str)
 {
     for (int i = 0; i < str.length(); ++i)
@@ -50,13 +33,11 @@ void ReplacePoint(std::string& str)
             str[i] = '!';
         }
     }
-    std::cout << "\n" << str << std::endl;
 }
-int CountSymb(std::string& str)
+
+int CountSymb(std::string const& str, char symb)
 {
-    char symb;
-    std::cout << "Введите символ: ";
-    std::cin >> symb;
+
     int count = 0;
     for (int i = 0; i < str.length(); ++i)
     {
@@ -67,36 +48,33 @@ int CountSymb(std::string& str)
     }
     return count;
 }
-void NumCharacters(std::string& str)
+
+void NumCharacters(std::string const& str)
 {
     int countNum = 0, temp, countLetter = 0, countSymbol = 0;
 
     for (int i = 0; i < str.length(); ++i)
     {
         temp = (char)(str[i]);
-        if (temp >= 48 && temp < 58)
+        if (std::isdigit(temp))
             countNum++;
-        if (temp >= 65 && temp < 91)
+        else if (std::isalpha(temp))
             countLetter++;
-        if (temp >= 97 && temp < 123)
-            countLetter++;
-        if (temp >= 32 && temp < 48)
-            countSymbol++;
-        if (temp >= 58 && temp < 65)
-            countSymbol++;
-        if (temp >= 91 && temp < 97)
-            countSymbol++;
-        if (temp >= 123 && temp <= 126)
+        else
             countSymbol++;
     }
     std::cout << "Количество цифр в строке: " << countNum << std::endl;
     std::cout << "Количество букв в строке: " << countLetter << std::endl;
     std::cout << "Количество символов в строке: " << countSymbol << std::endl;
 }
+
 int main()
 {
+    
     setlocale(LC_ALL, "rus");
     std::string str;
+    char symb;
+    int index;
 
     std::cout << "Введите строку: ";
     std::getline(std::cin, str);
@@ -107,24 +85,42 @@ int main()
     std::cout << "4. Замена \".\" на  \"!\"" << std::endl;
     std::cout << "5. Подсчет вхождений символа" << std::endl;
     std::cout << "6. Подсчет символов в строке" << "\n: ";
+
     int choice;
     std::cin >> choice;
     switch (choice)
     {
     case 1:
-        RemoveSymbolByIndex(str);
+        std::cout << "Введите индекс: ";
+        std::cin >> index;
+
+        RemoveSymbolByIndex(str, index);
+        std::cout << "Результат: " << str << std::endl;
         break;
     case 2:
-        RemoveChar(str);
+        std::cout << "Введите символ: ";
+        std::cin >> symb;
+
+        RemoveChar(str, symb);
+        std::cout << "Результат: " << str << std::endl;
         break;
     case 3:
-        InsertSymb(str);
+        std::cout << "Введите символ: ";
+        std::cin >> symb;
+        std::cout << "Введите индекс: ";
+        std::cin >> index;
+
+        InsertSymb(str, index, symb);
+        std::cout << "Результат: " << str << std::endl;
         break;
     case 4:
         ReplacePoint(str);
+        std::cout << "Результат: " << str << std::endl;
         break;
     case 5:
-        std::cout << CountSymb(str);
+        std::cout << "Введите символ: ";
+        std::cin >> symb;
+        std::cout << "Символ <" << symb << "> встречается " << CountSymb(str, symb) << " раз" << std::endl;
         break;
     case 6:
         NumCharacters(str);

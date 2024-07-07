@@ -1,12 +1,4 @@
-#include <vector>
-#include <iostream>
-
-enum direction {
-	Up,
-	Right,
-	Down,
-	Left
-};
+#include "Func.h"
 
 void PrintMatrix(std::vector<std::vector<int>>& matrix, const int& row, const int& col)
 {
@@ -31,7 +23,7 @@ void FillMatrix(std::vector<std::vector<int>>& matrix, const int& row, const int
 	PrintMatrix(matrix, row, col);
 }
 
-void AddColumnAt(std::vector<std::vector<int>>& matrix, int pos , int value = 0)
+void AddColumnAt(std::vector<std::vector<int>>& matrix, int pos , int value)
 {
 	for (int i = 0; i < matrix.size(); ++i)
 	{
@@ -45,29 +37,16 @@ void RemoveColumn(std::vector<std::vector<int>>& matrix, int pos)
 		matrix[i].erase(matrix[i].begin() + pos);
 	}
 }
-void MoveElement(std::vector<std::vector<int>>& matrix, direction direction, int countShift)
+void MovingHorizontally(std::vector<std::vector<int>>& matrix, int countShift, int direction)
 {
-	int temp;
-	int row = matrix.size();
-	int col = matrix[0].size();
-	switch (direction)
+	size_t temp;
+	size_t row = matrix.size();
+	size_t col = matrix[0].size();
+	for (size_t i = 0; i < row; ++i)
 	{
-	case Up:
-		for (int j = 0; j < col; ++j) {
-			for(int k = 0; k < countShift; ++k)
-			{
-				int temp = matrix[0][j];
-				for (int i = 0; i < row - 1; ++i) {
-					matrix[i][j] = matrix[i + 1][j];
-				}
-				matrix[row - 1][j] = temp;
-			}
-		}
-		break;
-	case Right:
-		for (size_t i = 0; i < row; ++i)
+		for (size_t k = 0; k < countShift; ++k)
 		{
-			for (int k = 0; k < countShift; ++k)
+			if (direction == 1)
 			{
 				temp = matrix[i][col - 1];
 				for (size_t j = col - 1; j > 0; --j)
@@ -76,24 +55,7 @@ void MoveElement(std::vector<std::vector<int>>& matrix, direction direction, int
 				}
 				matrix[i][0] = temp;
 			}
-		}
-		break;
-	case Down:
-		for (int j = 0; j < col; j++) {
-			for (int k = 0; k < countShift; ++k)
-			{
-				int temp = matrix[row - 1][j];
-				for (int i = row - 1; i > 0; i--) {
-					matrix[i][j] = matrix[i - 1][j];
-				}
-				matrix[0][j] = temp;
-			}
-		}
-		break;
-	case Left:
-		for (size_t i = 0; i < row; ++i)
-		{
-			for (int k = 0; k < countShift; ++k)
+			else
 			{
 				temp = matrix[i][0];
 				for (size_t j = 0; j < col - 1; ++j)
@@ -103,6 +65,51 @@ void MoveElement(std::vector<std::vector<int>>& matrix, direction direction, int
 				matrix[i][col - 1] = temp;
 			}
 		}
+	}
+}
+void MovingVertically(std::vector<std::vector<int>>& matrix, int countShift, int direction)
+{
+	size_t temp;
+	size_t row = matrix.size();
+	size_t col = matrix[0].size();
+	for (size_t j = 0; j < col; ++j) {
+		for (size_t k = 0; k < countShift; ++k)
+		{
+			if (direction == 1)
+			{
+				temp = matrix[0][j];
+				for (size_t i = 0; i < row - 1; ++i)
+				{
+					matrix[i][j] = matrix[i + 1][j];
+				}
+				matrix[row - 1][j] = temp;
+			}
+			else
+			{
+				temp = matrix[row - 1][j];
+				for (size_t i = row - 1; i > 0; i--) {
+					matrix[i][j] = matrix[i - 1][j];
+				}
+				matrix[0][j] = temp;
+			}
+		}
+	}
+}
+void MoveElement(std::vector<std::vector<int>>& matrix, direction direction, int countShift)
+{
+	switch (direction)
+	{
+	case Up:
+		MovingVertically(matrix, countShift, 1);
+		break;
+	case Right:
+		MovingHorizontally(matrix, countShift, 1);
+		break;
+	case Down:
+		MovingVertically(matrix, countShift, 0);
+		break;
+	case Left:
+		MovingHorizontally(matrix, countShift, 0);
 		break;
 	default:
 		break;

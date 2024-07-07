@@ -1,6 +1,8 @@
 #pragma once
-#include <vector>
 #include <string>
+#include <vector>
+#include <iostream>
+#include <windows.h>
 
 void AddContact(std::vector<std::vector<std::string>>& phoneBook, const std::string& name, const int& phone);
 void SearchByName(std::vector<std::vector<std::string>>& phoneBook, const std::string& name);

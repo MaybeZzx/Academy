@@ -1,5 +1,3 @@
-#include <iostream>
-#include <vector>
 #include "Func.h"
 
 int main()
@@ -9,6 +7,6 @@ int main()
 	FillMatrix(matrix, 5, 5);
 
 	std::cout << "\n==============================\n" << std::endl;
-	MoveElement(matrix, direction::Down, 2);
+	MoveElement(matrix, direction::Left, 1);
 	PrintMatrix(matrix, 5, 5);
 }
