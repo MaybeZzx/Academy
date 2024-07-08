@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 17
-VisualStudioVersion = 17.7.34221.43
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.34301.259
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "20_05", "20_05", "{3A202007-F6B1-47CD-B73C-1CDC9AB0D42B}"
 EndProject
@@ -245,6 +245,12 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "task_1", "Homework\mod_4\2task\task_1\task_1.vcxproj", "{9CE187CA-413F-4CD1-B942-D63D913D3D9C}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "task_2", "Homework\mod_4\2task\task_2\task_2.vcxproj", "{FB3E7EFF-2F19-4507-BDA3-452755392422}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "exam", "exam", "{4ABE4833-9EA4-4249-9A7F-9D8A3FF0B95D}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "06-07-24", "06-07-24", "{7F211163-00D3-4B4C-A0C0-D689896BD5F7}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "task_2", "exam\06-07-24\task_2\task_2.vcxproj", "{D567E9BF-3129-469D-B638-27AF384E2749}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -678,6 +684,14 @@ Global
 		{FB3E7EFF-2F19-4507-BDA3-452755392422}.Release|x64.Build.0 = Release|x64
 		{FB3E7EFF-2F19-4507-BDA3-452755392422}.Release|x86.ActiveCfg = Release|Win32
 		{FB3E7EFF-2F19-4507-BDA3-452755392422}.Release|x86.Build.0 = Release|Win32
+		{D567E9BF-3129-469D-B638-27AF384E2749}.Debug|x64.ActiveCfg = Debug|x64
+		{D567E9BF-3129-469D-B638-27AF384E2749}.Debug|x64.Build.0 = Debug|x64
+		{D567E9BF-3129-469D-B638-27AF384E2749}.Debug|x86.ActiveCfg = Debug|Win32
+		{D567E9BF-3129-469D-B638-27AF384E2749}.Debug|x86.Build.0 = Debug|Win32
+		{D567E9BF-3129-469D-B638-27AF384E2749}.Release|x64.ActiveCfg = Release|x64
+		{D567E9BF-3129-469D-B638-27AF384E2749}.Release|x64.Build.0 = Release|x64
+		{D567E9BF-3129-469D-B638-27AF384E2749}.Release|x86.ActiveCfg = Release|Win32
+		{D567E9BF-3129-469D-B638-27AF384E2749}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -801,6 +815,8 @@ Global
 		{A0C53E0A-86CF-4082-8B38-8B6F94365B20} = {7A17C97F-CEB0-4021-8FF4-20F8B375E755}
 		{9CE187CA-413F-4CD1-B942-D63D913D3D9C} = {6997720E-C881-4EDA-9EF6-E3B9A45ACB3B}
 		{FB3E7EFF-2F19-4507-BDA3-452755392422} = {6997720E-C881-4EDA-9EF6-E3B9A45ACB3B}
+		{7F211163-00D3-4B4C-A0C0-D689896BD5F7} = {4ABE4833-9EA4-4249-9A7F-9D8A3FF0B95D}
+		{D567E9BF-3129-469D-B638-27AF384E2749} = {7F211163-00D3-4B4C-A0C0-D689896BD5F7}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {85BFC448-136D-4105-AED2-A0A3597CC6FE}
