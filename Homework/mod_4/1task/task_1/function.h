@@ -5,6 +5,7 @@
 #include <vector>
 #include <iostream>
 #include <algorithm>
+#include <iomanip>
 
 #ifdef INTEGER
 #define FillArray FillArrayInt

@@ -1,11 +1,17 @@
-#define CHAR
+#define DOUBLE
 #include "function.h"
+#ifdef INTEGER
+std::vector<int> arr(10);
+#elif defined(CHAR)
+std::vector<char> arr(10);
+#elif defined(DOUBLE)
+std::vector<double> arr(10);
+#endif
 
 int main()
 {
 	srand(time(NULL));
 	setlocale(LC_ALL, "rus");
-	std::vector<char> arr(30);
 	FillArray(arr);
 	PrintArray(arr);
 	std::cout << std::endl;
@@ -18,7 +24,13 @@ int main()
 	PrintArray(arr);
 
 	std::cout << "Измененный массив: ";
+#ifdef INTEGER
+	EditArray(arr, 2, 100);
+#elif defined(CHAR)
 	EditArray(arr, 2, '+');
+#elif defined(DOUBLE)
+	EditArray(arr, 2, 999.9);
+#endif
 	PrintArray(arr);
 
 }

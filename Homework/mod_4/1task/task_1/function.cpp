@@ -89,7 +89,7 @@ void PrintArrayDouble(const std::vector<double> const& arr)
 {
 	for (auto const& el : arr)
 	{
-		std::cout << el << " ";
+		std::cout << std::fixed << std::setprecision(2) << el << " ";
 	}
 	std::cout << std::endl;
 }
