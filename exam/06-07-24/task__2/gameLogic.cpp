@@ -33,13 +33,13 @@ void InitField(unsigned short const& user_choice, GameField& gameField)
 		row = std::vector<std::string>(gameField.size, "--");
 	}
 }
-bool SearchVal(std::vector<std::vector<std::string>>& map,int const& x_, int const& y_)
+bool SearchVal(std::vector<std::vector<std::string>>& map, int const& x_, int const& y_)
 {
 	for (int x = 0; x < map.size(); ++x)
 	{
 		for (int y = 0; y < map[0].size(); ++y)
 		{
-			if (map[x][y] == map[x_][y_] )
+			if (map[x][y] == map[x_][y_])
 			{
 				if (x == x_ && y == y_)
 				{
@@ -59,7 +59,7 @@ void PrintMap(GameField const& gameField)
 		std::cout << "\t\t| ";
 		for (int j = 0; j < gameField.size; ++j)
 		{
-			
+
 			std::cout << gameField.Map[i][j] << " ";
 		}
 		std::cout << "|" << std::endl;
@@ -94,9 +94,9 @@ void FillMapAuto(GameField& gameField)
 	gameField.Map[xZero][yZero] = "**";
 	gameField.X = xZero;
 	gameField.Y = yZero;
-	
+
 }
-void FillMapManual(GameField& gameField) 
+void FillMapManual(GameField& gameField)
 {
 	int inputKey;
 	int rightValue = 1;
@@ -109,7 +109,7 @@ void FillMapManual(GameField& gameField)
 		{
 			PrintMap(gameField);
 			inputKey = _getch();
-			do 
+			do
 			{
 				inputKey = _getch();
 				if (gameField.Map[gameField.X][gameField.Y] == "--")
@@ -185,5 +185,5 @@ void Move(GameField& gameField, int const& inputKey)
 	}
 	system("cls");
 	PrintMap(gameField);
-	std::cout << "\n\n" << gameField.Map[gameField.X][gameField.Y]  << " " << gameField.X << " " << gameField.Y << std::endl;
+	std::cout << "\n\n" << gameField.Map[gameField.X][gameField.Y] << " " << gameField.X << " " << gameField.Y << std::endl;
 }
