@@ -184,7 +184,7 @@ void AddSong(std::vector<Song>& catalog)
 	std::getline(std::cin >> std::ws, newSong.author);
 	std::cout << "¬ведите год выпуска песни (- если неизвестен): ";
 	std::getline(std::cin >> std::ws, newSong.year);
-	std::cout << "¬ведите текст песни (* - переход на новую строку \\ - если неизвестен): ";
+	std::cout << "¬ведите текст песни (* - переход на новую строку || - если неизвестен): ";
 	std::getline(std::cin >> std::ws, newSong.lyrics);
 	if (newSong.lyrics == "-")
 	{
