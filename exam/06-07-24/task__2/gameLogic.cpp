@@ -89,13 +89,13 @@ void Game()
 	std::cout << "Количество перестановок: " << countOfMoving << std::endl;
 }
 
-void CreateRightMap(GameField& const game)
+void CreateRightMap(GameField& const gameField)
 {
 	int rightValue = 1;
 	std::string rightValue_string;
-	for (int x = 0; x < game.size; ++x)
+	for (int x = 0; x < gameField.size; ++x)
 	{
-		for (int y = 0; y < game.size; ++y)
+		for (int y = 0; y < gameField.size; ++y)
 		{
 			if (rightValue < 10)
 			{
@@ -105,11 +105,11 @@ void CreateRightMap(GameField& const game)
 			{
 				rightValue_string = std::to_string(rightValue);
 			}
-			game.rightMap[x][y] = rightValue_string;
+			gameField.rightMap[x][y] = rightValue_string;
 			rightValue++;
 		}
 	}
-	game.rightMap[game.size - 1][game.size - 1] = "--";
+	gameField.rightMap[gameField.size - 1][gameField.size - 1] = "--";
 }
 
 void InitField(unsigned short const& user_choice, GameField& gameField)
