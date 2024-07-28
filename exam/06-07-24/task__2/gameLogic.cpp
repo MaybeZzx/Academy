@@ -2,19 +2,29 @@
 
 GameField gameField;
 
+
 bool CheckMap(GameField& gameField)
 {
-	if (gameField.Map == gameField.rightMap)
-	{
-		return true;
-	}
-	return false;
+	return (gameField.Map == gameField.rightMap);
 }
-
+Keys ConvertToKey(int const& inputKey)
+{
+	switch (inputKey)
+	{
+	case 72:
+		return keyUp;
+	case 80:
+		return keyDown;
+	case 75:
+		return keyLeft;
+	case 77:
+		return keyRight;
+	}
+}
 void Game()
 {
-	unsigned short choiceSize = -1;
-	unsigned short choiceFill = -1;
+	unsigned short choiceSize = 3;
+	unsigned short choiceFill = 3;
 
 	std::cout << "\n\t  Пятнашки" << std::endl;
 	std::cout << "\n\tРазмер поля " << std::endl;
@@ -66,14 +76,15 @@ void Game()
 		FillMapAuto(gameField);
 		break;
 	}
+	//PrintMap(gameField);
 	int keyInput;
 	int start = clock();
 	int countOfMoving = 0;
 	while (!CheckMap(gameField))
 	{
 		keyInput = _getch();
-		Move(gameField, keyInput);
-		if (keyInput == 72 || keyInput == 75 || keyInput == 77 || keyInput == 80)
+		DoMove(gameField, ConvertToKey(keyInput));
+		if (keyInput == keyUp || keyInput == keyLeft || keyInput == keyRight || keyInput == keyDown)
 		{
 			countOfMoving++;
 		}
@@ -214,63 +225,70 @@ void FillMapAuto(GameField& gameField)
 	gameField.Y = yZero;
 }
 
-void FillMapManual(GameField& gameField)
+void Move()
 {
 	int inputKey;
-	int rightValue = 1;
+	int static rightValue = 1;
 	int x_right = 0, y_right = 0;
-	std::string rightValue_string;
+	std::string static rightValue_string;
+	do
+	{
+		if (rightValue < gameField.size * gameField.size)
+		{
+			inputKey = _getch();
+			if (gameField.Map[gameField.X][gameField.Y] == "--")
+			{
+				if (rightValue < 10)
+				{
+					rightValue_string = "0" + std::to_string(rightValue);
+					gameField.Map[gameField.X][gameField.Y] = rightValue_string;
+				}
+				else
+				{
+					rightValue_string = std::to_string(rightValue);
+					gameField.Map[gameField.X][gameField.Y] = rightValue_string;
+				}
+			}
+			else
+			{
+				for (int x_ = 0; x_ < gameField.size; ++x_)
+				{
+					for (int y_ = 0; y_ < gameField.size; ++y_)
+					{
+						if (gameField.Map[x_][y_] == "--")
+						{
+							gameField.X = x_;
+							gameField.Y = y_;
+							x_ = gameField.size - 1;
+							y_ = gameField.size - 1;
+						}
+					}
+				}
+			}
+		}
+		DoMove(gameField, ConvertToKey(inputKey));
+		gameField.Map[gameField.X][gameField.Y] = "--";
+		if (rightValue == gameField.size * gameField.size)
+		{
+			break;
+		}
+		std::cout << "\n\t\t Enter - поставить число" << std::endl;
+		std::cout << inputKey << std::endl;
+
+	} while (inputKey != 13);
+	rightValue++;
+	gameField.Map[gameField.X][gameField.Y] = rightValue_string;
+}
+
+void FillMapManual(GameField& gameField)
+{
+	
 	PrintMap(gameField);
 	for (int x = 0; x < gameField.Map.size(); ++x)
 	{
 		for (int y = 0; y < gameField.Map.size(); ++y)
 		{
-			do
-			{
-				if (rightValue < gameField.size * gameField.size)
-				{
-					inputKey = _getch();
-					if (gameField.Map[gameField.X][gameField.Y] == "--")
-					{
-						if (rightValue < 10)
-						{
-							rightValue_string = "0" + std::to_string(rightValue);
-							gameField.Map[gameField.X][gameField.Y] = rightValue_string;
-						}
-						else
-						{
-							rightValue_string = std::to_string(rightValue);
-							gameField.Map[gameField.X][gameField.Y] = rightValue_string;
-						}
-					}
-					else
-					{
-						for (int x_ = 0; x_ < gameField.size; ++x_)
-						{
-							for (int y_ = 0; y_ < gameField.size; ++y_)
-							{
-								if (gameField.Map[x_][y_] == "--")
-								{
-									gameField.X = x_;
-									gameField.Y = y_;
-									x_ = gameField.size-1;
-									y_ = gameField.size - 1;
-								}
-							}
-						}
-					}
-				}
-				Move(gameField, inputKey);
-				gameField.Map[gameField.X][gameField.Y] = "--";
-				if (rightValue == gameField.size * gameField.size)
-				{
-					break;
-				}
-				std::cout << "\n\t\t Enter - поставить число" << std::endl;
-				
-			} while (inputKey != 13);
-			rightValue++;
-			gameField.Map[gameField.X][gameField.Y] = rightValue_string;
+			Move();
 		}
 	}
 	for (int x = 0; x < gameField.size; ++x)
@@ -288,29 +306,29 @@ void FillMapManual(GameField& gameField)
 	}
 }
 
-void Move(GameField& gameField, int const& inputKey)
+void DoMove(GameField& gameField, Keys key)
 {
-	switch (inputKey)
+	switch (key)
 	{
-	case 72:
+	case keyUp:
 		if (gameField.X - 1 >= 0)
 		{
 			std::swap(gameField.Map[gameField.X][gameField.Y], gameField.Map[gameField.X--][gameField.Y]);
 		}
 		break;
-	case 80:
+	case keyDown:
 		if (gameField.X + 1 < gameField.size)
 		{
 			std::swap(gameField.Map[gameField.X][gameField.Y], gameField.Map[gameField.X++][gameField.Y]);
 		}
 		break;
-	case 75:
+	case keyLeft:
 		if (gameField.Y - 1 >= 0)
 		{
 			std::swap(gameField.Map[gameField.X][gameField.Y], gameField.Map[gameField.X][gameField.Y--]);
 		}
 		break;
-	case 77:
+	case keyRight:
 		if (gameField.Y + 1 < gameField.size)
 		{
 			std::swap(gameField.Map[gameField.X][gameField.Y], gameField.Map[gameField.X][gameField.Y++]);
