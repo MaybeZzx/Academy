@@ -2,44 +2,51 @@
 
 unsigned short const DELAY = 700;
 enum Menu {
-	addSong_ = 1,
-	addLyrics_ = 2,
-	deleteLyrics_ = 3,
-	changeLyrics_ = 4,
-	showSong_ = 5,
-	saveSong_ = 6,
-	searchAuthor_ = 7,
-	searchWord_ = 8,
-	showList_ = 9,
-	exit_ = 0
+	ADD_SONG = 1,
+	ADD_LYRICS = 2,
+	DELETE_LYRICS = 3,
+	CHANGE_LYRICS = 4,
+	SHOW_SONG = 5,
+	SAVE_SONG = 6,
+	SEARCH_AUTHOR = 7,
+	SEARCH_WORD = 8,
+	SHOW_LIST = 9,
+	EXIT = 0
 } menuEnum;
+
+enum UploadText
+{
+	FROM_KEYBOARD = 1,
+	FROM_FILE = 2
+} menuUpload;
 
 Menu ConvertToEnum(int const& userChoice)
 {
 	switch (userChoice)
 	{
 	case 1:
-		return addSong_;
+		return ADD_SONG;
 	case 2:
-		return addLyrics_;
+		return ADD_LYRICS;
 	case 3:
-		return deleteLyrics_;
+		return DELETE_LYRICS;
 	case 4:
-		return changeLyrics_;
+		return CHANGE_LYRICS;
 	case 5:
-		return showSong_;
+		return SHOW_SONG;
 	case 6:
-		return saveSong_;
+		return SAVE_SONG;
 	case 7:
-		return searchAuthor_;
+		return SEARCH_AUTHOR;
 	case 8:
-		return searchWord_;
+		return SEARCH_WORD;
 	case 9:
-		return showList_;
+		return SHOW_LIST;
 	default:
-		return exit_;
+		return EXIT;
 	}
 }
+
 void Start()
 {
 	std::vector<Song> catalog;
@@ -75,10 +82,10 @@ void Start()
 		menuEnum = ConvertToEnum(userChoice);
 		switch (menuEnum)
 		{
-		case addSong_:
+		case ADD_SONG:
 			AddSong(catalog);
 			break;
-		case addLyrics_:
+		case ADD_LYRICS:
 			system("cls");
 			std::cout << " 1. Ввести текст с клавиатуры" << std::endl;
 			std::cout << " 2. Добавить текст с файла" << std::endl;
@@ -88,48 +95,48 @@ void Start()
 			system("cls");
 			std::cout << "Введите название песни: ";
 			std::getline(std::cin >> std::ws, tempObj.title);
-
-			switch (addTextChoice)
+			menuUpload = (addTextChoice == 1 ? FROM_KEYBOARD : FROM_FILE);
+			switch (menuUpload)
 			{
-			case 1:
+			case FROM_KEYBOARD:
 				AddLyrics(catalog, tempObj.title);
 				break;
-			case 2:
+			case FROM_FILE:
 				AddLyricsFromFile(catalog, tempObj.title);
 				break;
 			}
 			break;
-		case deleteLyrics_:
+		case DELETE_LYRICS:
 			std::cout << "Введите название песни: ";
 			std::getline(std::cin >> std::ws, tempObj.title);
 			DeleteLyrics(catalog, tempObj.title);
 			break;
-		case changeLyrics_:
+		case CHANGE_LYRICS:
 			std::cout << "Введите название песни: ";
 			std::getline(std::cin >> std::ws, tempObj.title);
 			ChangeLyric(catalog, tempObj.title);
 			break;
-		case showSong_:
+		case SHOW_SONG:
 			std::cout << "Введите название песни: ";
 			std::getline(std::cin >> std::ws, tempObj.title);
 			ShowLyrics(catalog, tempObj.title);
 			break;
-		case saveSong_:
+		case SAVE_SONG:
 			std::cout << "Введите название песни: ";
 			std::getline(std::cin >> std::ws, tempObj.title);
 			SaveLyricsToFile(catalog, tempObj.title);
 			break;
-		case searchAuthor_:
+		case SEARCH_AUTHOR:
 			std::cout << "Введите автора: ";
 			std::getline(std::cin >> std::ws, tempObj.author);
 			FindByAuthor(catalog, tempObj.author);
 			break;
-		case searchWord_:
+		case SEARCH_WORD:
 			std::cout << "Введите слово: ";
 			std::getline(std::cin >> std::ws, tempObj.lyrics);
 			FindByWord(catalog, tempObj.lyrics);
 			break;
-		case showList_:
+		case SHOW_LIST:
 			if (!catalog.empty())
 			{
 				std::cout << "\tСписок песен\n" << std::endl;
@@ -156,7 +163,7 @@ void Start()
 
 			}
 			break;
-		case exit_:
+		case EXIT:
 			std::cout << "Выход..." << std::endl;
 			break;
 		default:
