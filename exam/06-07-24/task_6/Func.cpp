@@ -1,7 +1,45 @@
 #include "Func.h"
 
 unsigned short const DELAY = 700;
+enum Menu {
+	addSong_ = 1,
+	addLyrics_ = 2,
+	deleteLyrics_ = 3,
+	changeLyrics_ = 4,
+	showSong_ = 5,
+	saveSong_ = 6,
+	searchAuthor_ = 7,
+	searchWord_ = 8,
+	showList_ = 9,
+	exit_ = 0
+} menuEnum;
 
+Menu ConvertToEnum(int const& userChoice)
+{
+	switch (userChoice)
+	{
+	case 1:
+		return addSong_;
+	case 2:
+		return addLyrics_;
+	case 3:
+		return deleteLyrics_;
+	case 4:
+		return changeLyrics_;
+	case 5:
+		return showSong_;
+	case 6:
+		return saveSong_;
+	case 7:
+		return searchAuthor_;
+	case 8:
+		return searchWord_;
+	case 9:
+		return showList_;
+	default:
+		return exit_;
+	}
+}
 void Start()
 {
 	std::vector<Song> catalog;
@@ -34,12 +72,13 @@ void Start()
 		} while (userChoice < 0 || userChoice > 9);
 		system("cls");
 		int addTextChoice;
-		switch (userChoice)
+		menuEnum = ConvertToEnum(userChoice);
+		switch (menuEnum)
 		{
-		case 1:
+		case addSong_:
 			AddSong(catalog);
 			break;
-		case 2:
+		case addLyrics_:
 			system("cls");
 			std::cout << " 1. Ввести текст с клавиатуры" << std::endl;
 			std::cout << " 2. Добавить текст с файла" << std::endl;
@@ -60,37 +99,37 @@ void Start()
 				break;
 			}
 			break;
-		case 3:
+		case deleteLyrics_:
 			std::cout << "Введите название песни: ";
 			std::getline(std::cin >> std::ws, tempObj.title);
 			DeleteLyrics(catalog, tempObj.title);
 			break;
-		case 4:
+		case changeLyrics_:
 			std::cout << "Введите название песни: ";
 			std::getline(std::cin >> std::ws, tempObj.title);
 			ChangeLyric(catalog, tempObj.title);
 			break;
-		case 5:
+		case showSong_:
 			std::cout << "Введите название песни: ";
 			std::getline(std::cin >> std::ws, tempObj.title);
 			ShowLyrics(catalog, tempObj.title);
 			break;
-		case 6:
+		case saveSong_:
 			std::cout << "Введите название песни: ";
 			std::getline(std::cin >> std::ws, tempObj.title);
 			SaveLyricsToFile(catalog, tempObj.title);
 			break;
-		case 7:
+		case searchAuthor_:
 			std::cout << "Введите автора: ";
 			std::getline(std::cin >> std::ws, tempObj.author);
 			FindByAuthor(catalog, tempObj.author);
 			break;
-		case 8:
+		case searchWord_:
 			std::cout << "Введите слово: ";
 			std::getline(std::cin >> std::ws, tempObj.lyrics);
 			FindByWord(catalog, tempObj.lyrics);
 			break;
-		case 9:
+		case showList_:
 			if (!catalog.empty())
 			{
 				std::cout << "\tСписок песен\n" << std::endl;
@@ -117,7 +156,7 @@ void Start()
 
 			}
 			break;
-		case 0:
+		case exit_:
 			std::cout << "Выход..." << std::endl;
 			break;
 		default:
@@ -380,20 +419,13 @@ bool ConfirmAction(Actions const& action, std::string const& title)
 		std::cout << " Изменить текст песни \"" << title << "\"" << std::endl;
 		break;
 	case AddLyricFromFile:
-		std::cout << " Добавить текст песни \""<< title << "\" с файла" << std::endl;
+		std::cout << " Добавить текст песни \"" << title << "\" с файла" << std::endl;
 		break;
 	}
 	std::cout << "\tY - да\t\tN - нет";
 	std::cout << ":";
 	std::cin >> symb;
-	if (symb == 'y' || symb == 'Y')
-	{
-		return true;
-	}
-	else
-	{
-		return false;
-	}
+	return (symb == 'y' || symb == 'Y');
 }
 
 std::vector<Song>::iterator FindSongIndex(std::vector<Song>& catalog, std::string const& title)
@@ -409,11 +441,7 @@ bool FindSong(std::vector<Song>& catalog, std::string const& title)
 {
 	auto const it = FindSongIndex(catalog, title);
 
-	if (it == catalog.end())
-	{
-		return false;
-	}
-	return true;
+	return (it != catalog.end());
 }
 
 void FindByAuthor(std::vector<Song> const& catalog, std::string const& author)

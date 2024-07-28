@@ -14,10 +14,10 @@ struct GameField {
 };
 
 enum Keys {
-	keyDown = 80,
-	keyUp = 72,
-	keyLeft = 75,
-	keyRight = 77
+	KEY_DOWN = 80,
+	KEY_UP = 72,
+	KEY_LEFT = 75,
+	KEY_RIGHT = 77
 };
 
 
@@ -28,4 +28,3 @@ void FillMapAuto(GameField& gameField);
 void FillMapManual(GameField& gameField);
 void Move();
 void DoMove(GameField& gameField, Keys key);
-Keys ConvertToKey(int const& inputKey);

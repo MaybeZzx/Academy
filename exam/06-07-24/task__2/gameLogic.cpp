@@ -3,24 +3,42 @@
 GameField gameField;
 
 
-bool CheckMap(GameField& gameField)
-{
-	return (gameField.Map == gameField.rightMap);
-}
-Keys ConvertToKey(int const& inputKey)
+enum FillMap {
+	FILL_MANUAL = 1,
+	FILL_AUTO = 2
+} fillSelect;
+
+Keys ConvertToEnum(int const& inputKey)
 {
 	switch (inputKey)
 	{
 	case 72:
-		return keyUp;
+		return KEY_UP;
 	case 80:
-		return keyDown;
+		return KEY_DOWN;
 	case 75:
-		return keyLeft;
+		return KEY_LEFT;
 	case 77:
-		return keyRight;
+		return KEY_RIGHT;
 	}
 }
+
+FillMap ConvertToKey(int const& inputKey)
+{
+	switch (inputKey)
+	{
+	case 1:
+		return FILL_MANUAL;
+	case 2:
+		return FILL_AUTO;
+	}
+}
+
+bool CheckMap(GameField& gameField)
+{
+	return (gameField.Map == gameField.rightMap);
+}
+
 void Game()
 {
 	unsigned short choiceSize = 3;
@@ -63,28 +81,29 @@ void Game()
 		std::cout << "Выход" << std::endl;
 		return;
 	}
+
 	InitField(choiceSize, gameField);
-	switch (choiceFill)
+	fillSelect = ConvertToKey(choiceFill);
+	switch (fillSelect)
 	{
-	case 1:
+	case FILL_MANUAL:
 		FillMapManual(gameField);
 		break;
-	case 2:
+	case FILL_AUTO:
 		FillMapAuto(gameField);
 		break;
 	default:
 		FillMapAuto(gameField);
 		break;
 	}
-	//PrintMap(gameField);
 	int keyInput;
 	int start = clock();
 	int countOfMoving = 0;
 	while (!CheckMap(gameField))
 	{
 		keyInput = _getch();
-		DoMove(gameField, ConvertToKey(keyInput));
-		if (keyInput == keyUp || keyInput == keyLeft || keyInput == keyRight || keyInput == keyDown)
+		DoMove(gameField, ConvertToEnum(keyInput));
+		if (keyInput == KEY_UP || keyInput == KEY_LEFT || keyInput == KEY_RIGHT || keyInput == KEY_DOWN)
 		{
 			countOfMoving++;
 		}
@@ -266,7 +285,7 @@ void Move()
 				}
 			}
 		}
-		DoMove(gameField, ConvertToKey(inputKey));
+		DoMove(gameField, ConvertToEnum(inputKey));
 		gameField.Map[gameField.X][gameField.Y] = "--";
 		if (rightValue == gameField.size * gameField.size)
 		{
@@ -310,25 +329,25 @@ void DoMove(GameField& gameField, Keys key)
 {
 	switch (key)
 	{
-	case keyUp:
+	case KEY_UP:
 		if (gameField.X - 1 >= 0)
 		{
 			std::swap(gameField.Map[gameField.X][gameField.Y], gameField.Map[gameField.X--][gameField.Y]);
 		}
 		break;
-	case keyDown:
+	case KEY_DOWN:
 		if (gameField.X + 1 < gameField.size)
 		{
 			std::swap(gameField.Map[gameField.X][gameField.Y], gameField.Map[gameField.X++][gameField.Y]);
 		}
 		break;
-	case keyLeft:
+	case KEY_LEFT:
 		if (gameField.Y - 1 >= 0)
 		{
 			std::swap(gameField.Map[gameField.X][gameField.Y], gameField.Map[gameField.X][gameField.Y--]);
 		}
 		break;
-	case keyRight:
+	case KEY_RIGHT:
 		if (gameField.Y + 1 < gameField.size)
 		{
 			std::swap(gameField.Map[gameField.X][gameField.Y], gameField.Map[gameField.X][gameField.Y++]);
