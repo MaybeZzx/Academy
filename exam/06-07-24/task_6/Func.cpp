@@ -429,7 +429,7 @@ bool ConfirmAction(Actions const& action, std::string const& title)
 		std::cout << " Добавить текст песни \"" << title << "\" с файла" << std::endl;
 		break;
 	}
-	std::cout << "\tY - да\t\tN - нет";
+	std::cout << "\tY - да\t\tN - нет" << std::endl;
 	std::cout << ":";
 	std::cin >> symb;
 	return (symb == 'y' || symb == 'Y');
