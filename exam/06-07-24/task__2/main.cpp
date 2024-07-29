@@ -3,5 +3,5 @@ int main()
 {
 	setlocale(LC_ALL, "RUS");
 	srand(time(NULL));
-	Game();
+	Menu();
 }

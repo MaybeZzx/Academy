@@ -2,171 +2,21 @@
 
 GameField gameField;
 
+short const doubleDigit = 10;
+short const numberStrLen = 2;
+
 
 enum FillMap {
 	FILL_MANUAL = 1,
 	FILL_AUTO = 2
 } fillSelect;
 
-Keys ConvertToEnum(int const& inputKey)
-{
-	switch (inputKey)
-	{
-	case 72:
-		return KEY_UP;
-	case 80:
-		return KEY_DOWN;
-	case 75:
-		return KEY_LEFT;
-	case 77:
-		return KEY_RIGHT;
-	}
-}
-
-FillMap ConvertToKey(int const& inputKey)
-{
-	switch (inputKey)
-	{
-	case 1:
-		return FILL_MANUAL;
-	case 2:
-		return FILL_AUTO;
-	}
-}
-
 bool isRightMap(GameField& gameField)
 {
 	return (gameField.Map == gameField.rightMap);
 }
 
-void Game()
-{
-	unsigned short choiceSize = 3;
-	unsigned short choiceFill = 3;
-
-	std::cout << "\n\t  Пятнашки" << std::endl;
-	std::cout << "\n\tРазмер поля " << std::endl;
-	std::cout << "\t1. 3x3" << std::endl;
-	std::cout << "\t2. 4x4" << std::endl;
-	std::cout << "\n\t0. Выход" << std::endl;
-
-	while (choiceSize != 1 && choiceSize != 2 && choiceSize != 0)
-	{
-		std::cout << "\t: ";
-		std::cin >> choiceSize;
-	}
-	system("cls");
-
-	if (choiceSize == 0)
-	{
-		std::cout << "Выход" << std::endl;
-		return;
-	}
-
-	std::cout << "\n\t  Пятнашки" << std::endl;
-	std::cout << "\n\tРасстановка поля" << std::endl;
-	std::cout << "\t1. Вручную" << std::endl;
-	std::cout << "\t2. Автоматически" << std::endl;
-	std::cout << "\n\t0. Выход" << std::endl;
-
-	while (choiceFill != 1 && choiceFill != 2 && choiceFill != 0)
-	{
-		std::cout << "\t: ";
-		std::cin >> choiceFill;
-	}
-	system("cls");
-
-	if (choiceFill == 0)
-	{
-		std::cout << "Выход" << std::endl;
-		return;
-	}
-
-	InitField(choiceSize, gameField);
-	fillSelect = ConvertToKey(choiceFill);
-	switch (fillSelect)
-	{
-	case FILL_MANUAL:
-		FillMapManual(gameField);
-		break;
-	case FILL_AUTO:
-		FillMapAuto(gameField);
-		break;
-	default:
-		FillMapAuto(gameField);
-		break;
-	}
-	int keyInput;
-	int start = clock();
-	int countOfMoving = 0;
-	while (!isRightMap(gameField))
-	{
-		keyInput = _getch();
-		DoMove(gameField, ConvertToEnum(keyInput));
-		if (keyInput == KEY_UP || keyInput == KEY_LEFT || keyInput == KEY_RIGHT || keyInput == KEY_DOWN)
-		{
-			countOfMoving++;
-		}
-	}
-	int end = clock();
-	int sec = double(end - start) / CLOCKS_PER_SEC;
-	int hour = sec / 3600;
-	int minute = (sec % 3600) / 60;
-	int secRemaining = sec % 60;
-
-	std::cout << "Вы победили!" << std::endl;
-	std::cout << "Потраченное время: " << hour << ":" << minute << ":" << secRemaining << std::endl;
-	std::cout << "Количество перестановок: " << countOfMoving << std::endl;
-}
-
-void CreateRightMap(GameField& const gameField)
-{
-	int rightValue = 1;
-	std::string rightValue_string;
-	for (int x = 0; x < gameField.size; ++x)
-	{
-		for (int y = 0; y < gameField.size; ++y)
-		{
-			if (rightValue < 10)
-			{
-				rightValue_string = "0" + std::to_string(rightValue);
-			}
-			else
-			{
-				rightValue_string = std::to_string(rightValue);
-			}
-			gameField.rightMap[x][y] = rightValue_string;
-			rightValue++;
-		}
-	}
-	gameField.rightMap[gameField.size - 1][gameField.size - 1] = "--";
-}
-
-void InitField(unsigned short const& user_choice, GameField& gameField)
-{
-	if (user_choice == 1)
-	{
-		gameField.size = 3;
-	}
-	else 
-	{
-		gameField.size = 4;
-	}
-	gameField.Map = std::vector<std::vector<std::string>>(gameField.size);
-	gameField.rightMap = std::vector<std::vector<std::string>>(gameField.size);
-	for (auto& row : gameField.Map)
-	{
-		row = std::vector<std::string>(gameField.size, "--");
-	}	
-	for (auto& row : gameField.rightMap)
-	{
-		row = std::vector<std::string>(gameField.size, "--");
-	}
-
-	CreateRightMap(gameField);
-}
-
-bool SearchVal(GameField const& gameField, int const& x_, int const& y_)
+bool isSet (GameField const& gameField, int const& x_, int const& y_)
 {
 	for (int x = 0; x < gameField.size; ++x)
 	{
@@ -185,9 +35,168 @@ bool SearchVal(GameField const& gameField, int const& x_, int const& y_)
 	return false;
 }
 
+int StartTimer()
+{
+	return clock();
+}
+
+int EndTimer(int const& timer)
+{
+	return (clock() - timer) / CLOCKS_PER_SEC;
+}
+
+void StartGame(unsigned short& choiceSize, unsigned short& choiceFill)
+{
+	InitField(choiceSize, gameField);
+	fillSelect = static_cast<FillMap>(choiceFill);
+	switch (fillSelect)
+	{
+	case FILL_MANUAL:
+		FillMapManual(gameField);
+		break;
+	case FILL_AUTO:
+		FillMapAuto(gameField);
+		break;
+	default:
+		FillMapAuto(gameField);
+		break;
+	}
+}
+
+void SelectSize(unsigned short& choiceSize)
+{
+	std::cout << "\n\t  Пятнашки" << std::endl;
+	std::cout << "\n\tРазмер поля " << std::endl;
+	std::cout << "\t1. 3x3" << std::endl;
+	std::cout << "\t2. 4x4" << std::endl;
+	std::cout << "\n\t0. Выход" << std::endl;
+
+	while (choiceSize != 1 && choiceSize != 2 && choiceSize != 0)
+	{
+		std::cout << "\t: ";
+		std::cin >> choiceSize;
+	}
+	system("cls");
+}
+
+void SelectFill(unsigned short& choiceFill)
+{
+	std::cout << "\n\t  Пятнашки" << std::endl;
+	std::cout << "\n\tРасстановка поля" << std::endl;
+	std::cout << "\t1. Вручную" << std::endl;
+	std::cout << "\t2. Автоматически" << std::endl;
+	std::cout << "\n\t0. Выход" << std::endl;
+
+	while (choiceFill != 1 && choiceFill != 2 && choiceFill != 0)
+	{
+		std::cout << "\t: ";
+		std::cin >> choiceFill;
+	}
+	system("cls");
+}
+
+void ShowResults(int const& timer, int const& countOfMoving)
+{
+	int hour = timer / 3600;
+	int minute = (timer % 3600) / 60;
+	int secRemaining = timer % 60;
+
+	std::cout << "Вы победили!" << std::endl;
+	std::cout << "Потраченное время: " << hour << ":" << minute << ":" << secRemaining << std::endl;
+	std::cout << "Количество перестановок: " << countOfMoving << std::endl;
+}
+
+void Menu()
+{
+	unsigned short choiceSize = 3;
+	unsigned short choiceFill = 3;
+
+	SelectSize(choiceSize);
+
+	if (choiceSize == 0)
+	{
+		std::cout << "Выход" << std::endl;
+		return;
+	}
+
+	SelectFill(choiceFill);
+
+	if (choiceFill == 0)
+	{
+		std::cout << "Выход" << std::endl;
+		return;
+	}
+
+	StartGame(choiceSize, choiceFill);
+
+	int timer = StartTimer();
+	int keyInput;
+	int countOfMoving = 0;
+
+	while (!isRightMap(gameField))
+	{
+		keyInput = _getch();
+		DoMove(gameField, static_cast<Keys>(keyInput));
+		if (keyInput == KEY_UP || keyInput == KEY_LEFT || keyInput == KEY_RIGHT || keyInput == KEY_DOWN)
+		{
+			countOfMoving++;
+		}
+	}
+
+	timer = EndTimer(timer);
+	ShowResults(timer, countOfMoving);
+}
+
+void CreateRightMap(GameField& const gameField)
+{
+	int rightValue = 1;
+	std::string rightValue_string;
+	for (int x = 0; x < gameField.size; ++x)
+	{
+		for (int y = 0; y < gameField.size; ++y)
+		{
+			if (rightValue < doubleDigit)
+			{
+				rightValue_string = "0" + std::to_string(rightValue);
+			}
+			else
+			{
+				rightValue_string = std::to_string(rightValue);
+			}
+			gameField.rightMap[x][y] = rightValue_string;
+			rightValue++;
+		}
+	}
+	gameField.rightMap[gameField.size - 1][gameField.size - 1] = "--";
+}
+
+void InitField(unsigned short const& user_choice, GameField& gameField)
+{
+	if (user_choice == 1)
+	{
+		gameField.size = gameField.smallSize;
+	}
+	else 
+	{
+		gameField.size = gameField.largeSize;
+	}
+	gameField.Map = std::vector<std::vector<std::string>>(gameField.size);
+	gameField.rightMap = std::vector<std::vector<std::string>>(gameField.size);
+	for (auto& row : gameField.Map)
+	{
+		row = std::vector<std::string>(gameField.size, "--");
+	}	
+	for (auto& row : gameField.rightMap)
+	{
+		row = std::vector<std::string>(gameField.size, "--");
+	}
+
+	CreateRightMap(gameField);
+}
+
 void PrintLine(unsigned short const& size)
 {
-	if (size == 3)
+	if (size == gameField.smallSize)
 	{
 		std::cout << "\t\t============" << std::endl;
 	}
@@ -214,39 +223,26 @@ void PrintMap(GameField const& gameField)
 	PrintLine(gameField.size);
 }
 
-void FillMapAuto(GameField& gameField)
+void SetCursor(GameField& gameField)
 {
-	int xZero = 0, yZero = 0;
-
-	for (int x = 0; x < gameField.Map.size(); ++x)
+	for (int x_ = 0; x_ < gameField.size; ++x_)
 	{
-		for (int y = 0; y < gameField.Map[0].size(); ++y)
+		for (int y_ = 0; y_ < gameField.size; ++y_)
 		{
-			gameField.Map[x][y] = std::to_string(rand() % (gameField.size* gameField.size));
-			if (gameField.Map[x][y].length() < 2)
+			if (gameField.Map[x_][y_] == "--")
 			{
-				gameField.Map[x][y] = "0" + gameField.Map[x][y];
-			}
-			if (SearchVal(gameField, x, y))
-			{
-				y--; 
-				continue;
-			}
-			if (gameField.Map[x][y] == "00")
-			{
-				xZero = x;
-				yZero = y;
+				gameField.X = x_;
+				gameField.Y = y_;
+				x_ = gameField.size - 1;
+				y_ = gameField.size - 1;
 			}
 		}
 	}
-	gameField.Map[xZero][yZero] = "--";
-	gameField.X = xZero;
-	gameField.Y = yZero;
 }
 
-void Move()
+void SetNumber()
 {
-	int inputKey;
+	int inputKey = 0;
 	int static rightValue = 1;
 	int x_right = 0, y_right = 0;
 	std::string static rightValue_string;
@@ -257,7 +253,7 @@ void Move()
 			inputKey = _getch();
 			if (gameField.Map[gameField.X][gameField.Y] == "--")
 			{
-				if (rightValue < 10)
+				if (rightValue < doubleDigit)
 				{
 					rightValue_string = "0" + std::to_string(rightValue);
 					gameField.Map[gameField.X][gameField.Y] = rightValue_string;
@@ -270,22 +266,10 @@ void Move()
 			}
 			else
 			{
-				for (int x_ = 0; x_ < gameField.size; ++x_)
-				{
-					for (int y_ = 0; y_ < gameField.size; ++y_)
-					{
-						if (gameField.Map[x_][y_] == "--")
-						{
-							gameField.X = x_;
-							gameField.Y = y_;
-							x_ = gameField.size - 1;
-							y_ = gameField.size - 1;
-						}
-					}
-				}
+				SetCursor(gameField);
 			}
 		}
-		DoMove(gameField, ConvertToEnum(inputKey));
+		DoMove(gameField, static_cast<Keys>(inputKey));
 		gameField.Map[gameField.X][gameField.Y] = "--";
 		if (rightValue == gameField.size * gameField.size)
 		{
@@ -294,9 +278,45 @@ void Move()
 		std::cout << "\n\t\t Enter - поставить число" << std::endl;
 		std::cout << inputKey << std::endl;
 
-	} while (inputKey != 13);
+	} while (inputKey != ENTER);
 	rightValue++;
 	gameField.Map[gameField.X][gameField.Y] = rightValue_string;
+}
+
+void FillMapAuto(GameField& gameField)
+{
+	int xZero = 0, yZero = 0;
+	int rightValue = 1;
+	std::string rightValue_string;
+	for (int x = 0; x < gameField.Map.size(); ++x)
+	{
+		for (int y = 0; y < gameField.Map[0].size(); ++y)
+		{
+			rightValue = rand() % (gameField.size * gameField.size);
+			rightValue_string = std::to_string(rightValue);
+
+			if (rightValue < doubleDigit)
+			{
+				rightValue_string = "0" + rightValue_string;
+			}
+			gameField.Map[x][y] = rightValue_string;
+
+			if (isSet(gameField, x, y))
+			{
+				y--; 
+				continue;
+			}
+
+			if (gameField.Map[x][y] == "00")
+			{
+				xZero = x;
+				yZero = y;
+			}
+		}
+	}
+	gameField.Map[xZero][yZero] = "--";
+	gameField.X = xZero;
+	gameField.Y = yZero;
 }
 
 void FillMapManual(GameField& gameField)
@@ -307,22 +327,10 @@ void FillMapManual(GameField& gameField)
 	{
 		for (int y = 0; y < gameField.Map.size(); ++y)
 		{
-			Move();
+			SetNumber();
 		}
 	}
-	for (int x = 0; x < gameField.size; ++x)
-	{
-		for (int y = 0; y < gameField.size; ++y)
-		{
-			if (gameField.Map[x][y] == "--")
-			{
-				gameField.X = x;
-				gameField.Y = y;
-				x = gameField.size - 1;
-				y = gameField.size - 1;
-			}
-		}
-	}
+	SetCursor(gameField);
 }
 
 void DoMove(GameField& gameField, Keys key)
