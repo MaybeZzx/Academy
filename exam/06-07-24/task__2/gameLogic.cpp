@@ -34,7 +34,7 @@ FillMap ConvertToKey(int const& inputKey)
 	}
 }
 
-bool CheckMap(GameField& gameField)
+bool isRightMap(GameField& gameField)
 {
 	return (gameField.Map == gameField.rightMap);
 }
@@ -99,7 +99,7 @@ void Game()
 	int keyInput;
 	int start = clock();
 	int countOfMoving = 0;
-	while (!CheckMap(gameField))
+	while (!isRightMap(gameField))
 	{
 		keyInput = _getch();
 		DoMove(gameField, ConvertToEnum(keyInput));
