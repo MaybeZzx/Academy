@@ -4,7 +4,9 @@ GameField gameField;
 
 short const doubleDigit = 10;
 short const numberStrLen = 2;
-
+std::string const extraSymbol = "0";
+std::string const doubleZero = "00";
+std::string const doubleDash = "--";
 
 enum FillMap {
 	FILL_MANUAL = 1,
@@ -155,19 +157,14 @@ void CreateRightMap(GameField& const gameField)
 	{
 		for (int y = 0; y < gameField.size; ++y)
 		{
-			if (rightValue < doubleDigit)
-			{
-				rightValue_string = "0" + std::to_string(rightValue);
-			}
-			else
-			{
-				rightValue_string = std::to_string(rightValue);
-			}
-			gameField.rightMap[x][y] = rightValue_string;
+			gameField.rightMap[x][y] = (rightValue < doubleDigit) 
+				? extraSymbol + std::to_string(rightValue)
+				: std::to_string(rightValue);
+
 			rightValue++;
 		}
 	}
-	gameField.rightMap[gameField.size - 1][gameField.size - 1] = "--";
+	gameField.rightMap[gameField.size - 1][gameField.size - 1] = doubleDash;
 }
 
 void InitField(unsigned short const& user_choice, GameField& gameField)
@@ -184,11 +181,11 @@ void InitField(unsigned short const& user_choice, GameField& gameField)
 	gameField.rightMap = std::vector<std::vector<std::string>>(gameField.size);
 	for (auto& row : gameField.Map)
 	{
-		row = std::vector<std::string>(gameField.size, "--");
+		row = std::vector<std::string>(gameField.size, doubleDash);
 	}	
 	for (auto& row : gameField.rightMap)
 	{
-		row = std::vector<std::string>(gameField.size, "--");
+		row = std::vector<std::string>(gameField.size, doubleDash);
 	}
 
 	CreateRightMap(gameField);
@@ -229,7 +226,7 @@ void SetCursor(GameField& gameField)
 	{
 		for (int y_ = 0; y_ < gameField.size; ++y_)
 		{
-			if (gameField.Map[x_][y_] == "--")
+			if (gameField.Map[x_][y_] == doubleDash)
 			{
 				gameField.X = x_;
 				gameField.Y = y_;
@@ -251,11 +248,11 @@ void SetNumber()
 		if (rightValue < gameField.size * gameField.size)
 		{
 			inputKey = _getch();
-			if (gameField.Map[gameField.X][gameField.Y] == "--")
+			if (gameField.Map[gameField.X][gameField.Y] == doubleDash)
 			{
 				if (rightValue < doubleDigit)
 				{
-					rightValue_string = "0" + std::to_string(rightValue);
+					rightValue_string = extraSymbol + std::to_string(rightValue);
 					gameField.Map[gameField.X][gameField.Y] = rightValue_string;
 				}
 				else
@@ -270,7 +267,7 @@ void SetNumber()
 			}
 		}
 		DoMove(gameField, static_cast<Keys>(inputKey));
-		gameField.Map[gameField.X][gameField.Y] = "--";
+		gameField.Map[gameField.X][gameField.Y] = doubleDash;
 		if (rightValue == gameField.size * gameField.size)
 		{
 			break;
@@ -297,7 +294,7 @@ void FillMapAuto(GameField& gameField)
 
 			if (rightValue < doubleDigit)
 			{
-				rightValue_string = "0" + rightValue_string;
+				rightValue_string = extraSymbol + rightValue_string;
 			}
 			gameField.Map[x][y] = rightValue_string;
 
@@ -307,14 +304,14 @@ void FillMapAuto(GameField& gameField)
 				continue;
 			}
 
-			if (gameField.Map[x][y] == "00")
+			if (gameField.Map[x][y] == doubleZero)
 			{
 				xZero = x;
 				yZero = y;
 			}
 		}
 	}
-	gameField.Map[xZero][yZero] = "--";
+	gameField.Map[xZero][yZero] = doubleDash;
 	gameField.X = xZero;
 	gameField.Y = yZero;
 }
