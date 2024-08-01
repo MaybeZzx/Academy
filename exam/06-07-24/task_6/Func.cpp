@@ -20,6 +20,59 @@ enum UploadText
 	FROM_FILE = 2
 } menuUpload;
 
+void AddLyric(int& addTextChoice, Song& tempObj, std::vector<Song>& catalog)
+{
+	system("cls");
+	std::cout << " 1. Ввести текст с клавиатуры" << std::endl;
+	std::cout << " 2. Добавить текст с файла" << std::endl;
+	std::cout << ": ";
+
+	std::cin >> addTextChoice;
+	system("cls");
+	std::cout << "Введите название песни: ";
+	std::getline(std::cin >> std::ws, tempObj.title);
+
+	menuUpload = (addTextChoice == 1 ? FROM_KEYBOARD : FROM_FILE);
+	switch (menuUpload)
+	{
+	case FROM_KEYBOARD:
+		AddLyrics(catalog, tempObj.title);
+		break;
+	case FROM_FILE:
+		AddLyricsFromFile(catalog, tempObj.title);
+		break;
+	}
+}
+
+void ShowList(std::vector<Song> const& catalog)
+{
+	if (!catalog.empty())
+	{
+		std::cout << "\tСписок песен\n" << std::endl;
+		for (size_t i = 0; i < catalog.size(); ++i)
+		{
+			std::cout << "Автор: " << catalog[i].author << std::endl;
+			std::cout << "Название: " << catalog[i].title << std::endl;
+			std::cout << "=========================" << std::endl;
+		}
+		std::cout << "\n\tY - вернуться в меню" << std::endl;
+		std::cout << ": ";
+		char symb;
+		std::cin >> symb;
+		while (symb != 'y' && symb != 'Y')
+		{
+			std::cout << ": ";
+			std::cin >> symb;
+		}
+	}
+	else
+	{
+		std::cout << "Каталог пуст";
+		Sleep(DELAY);
+
+	}
+}
+
 void DoTask(int const& userChoice, Song& tempObj, std::vector<Song>& catalog)
 {
 	int addTextChoice;
@@ -30,25 +83,7 @@ void DoTask(int const& userChoice, Song& tempObj, std::vector<Song>& catalog)
 		AddSong(catalog);
 		break;
 	case ADD_LYRICS:
-		system("cls");
-		std::cout << " 1. Ввести текст с клавиатуры" << std::endl;
-		std::cout << " 2. Добавить текст с файла" << std::endl;
-		std::cout << ": ";
-
-		std::cin >> addTextChoice;
-		system("cls");
-		std::cout << "Введите название песни: ";
-		std::getline(std::cin >> std::ws, tempObj.title);
-		menuUpload = (addTextChoice == 1 ? FROM_KEYBOARD : FROM_FILE);
-		switch (menuUpload)
-		{
-		case FROM_KEYBOARD:
-			AddLyrics(catalog, tempObj.title);
-			break;
-		case FROM_FILE:
-			AddLyricsFromFile(catalog, tempObj.title);
-			break;
-		}
+		AddLyric(addTextChoice, tempObj, catalog);
 		break;
 	case DELETE_LYRICS:
 		std::cout << "Введите название песни: ";
@@ -81,31 +116,7 @@ void DoTask(int const& userChoice, Song& tempObj, std::vector<Song>& catalog)
 		FindByWord(catalog, tempObj.lyrics);
 		break;
 	case SHOW_LIST:
-		if (!catalog.empty())
-		{
-			std::cout << "\tСписок песен\n" << std::endl;
-			for (size_t i = 0; i < catalog.size(); ++i)
-			{
-				std::cout << "Автор: " << catalog[i].author << std::endl;
-				std::cout << "Название: " << catalog[i].title << std::endl;
-				std::cout << "=========================" << std::endl;
-			}
-			std::cout << "\n\tY - вернуться в меню" << std::endl;
-			std::cout << ": ";
-			char symb;
-			std::cin >> symb;
-			while (symb != 'y' && symb != 'Y')
-			{
-				std::cout << ": ";
-				std::cin >> symb;
-			}
-		}
-		else
-		{
-			std::cout << "Каталог пуст";
-			Sleep(DELAY);
-
-		}
+		ShowList(catalog);
 		break;
 	case EXIT:
 		std::cout << "Выход..." << std::endl;
