@@ -47,7 +47,7 @@ double avg(int* a, int* b, int const& size)
 	return result;
 
 }
-double Action(int* a, int* b, int const& size)
+double Action(int* a, int* b, int const& size_A, int const& size_B, double(*function(int*a, int* b, int const& size)))
 {
 	int choice;
 	std::cout << "Μενώ:\n1. max\n2. min\n3. avg\n: ";
@@ -55,10 +55,9 @@ double Action(int* a, int* b, int const& size)
 	switch (choice)
 	{
 	case 1:
-		return max(a, b, size);
+		function = max;
 		break;
 	case 2:
-		return min(a, b, size);
 		break;
 	case 3:
 		return avg(a, b, size);
