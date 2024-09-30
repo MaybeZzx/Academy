@@ -61,4 +61,5 @@ double avg(int* a, int* b, int const& size_A, int const& size_B)
 double Action(int* a, int* b, int const& size_A, int const& size_B, double(*func)(int* , int* , int const&, int const&))
 {
 	return func(a,b,size_A,size_B);
+
 }
