@@ -2,33 +2,40 @@
 
 
 
-double max(int* a, int* b, int const& size)
+double max(int* a, int* b, int const& size_A, int const& size_B)
 {
 	double result = a[0];
-	for (int i = 0; i < size; i++)
+	for (int i = 0; i < size_A; i++)
 	{
 		if (result < a[i])
 		{
 			result = a[i];
 		}
+	}
+	for (int i = 0; i < size_B; i++)
+	{
 		if (result < b[i])
 		{
 			result = b[i];
 		}
 	}
+	
 	return result;
 }
 
-double min(int* a, int* b, int const& size)
+double min(int* a, int* b, int const& size_A, int const& size_B)
 {
 	double result = a[0];
-	for (int i = 0; i < size; i++)
+	for (int i = 0; i < size_A; i++)
 	{
 		if (result > a[i])
 		{
 			result = a[i];
 		}
-		if (result > a[i])
+	}
+	for (int i = 0; i < size_B; i++)
+	{
+		if (result > b[i])
 		{
 			result = b[i];
 		}
@@ -36,36 +43,22 @@ double min(int* a, int* b, int const& size)
 	return result;
 
 }
-double avg(int* a, int* b, int const& size)
+double avg(int* a, int* b, int const& size_A, int const& size_B)
 {
 	double result = 0;
-	for (int i = 0; i < size; i++)
+	for (int i = 0; i < size_A; i++)
 	{
-		result += a[i] + b[i];
+		result += a[i];
 	}
-	result /= (size * 2);
+	for (int i = 0; i < size_B; i++)
+	{
+		result += b[i];
+	}
+	result /= ((size_A + size_B) * 2);
 	return result;
 
 }
-double Action(int* a, int* b, int const& size)
+double Action(int* a, int* b, int const& size_A, int const& size_B, double(*func)(int* , int* , int const&, int const&))
 {
-	int choice;
-	std::cout << "Μενώ:\n1. max\n2. min\n3. avg\n: ";
-	std::cin >> choice;
-	switch (choice)
-	{
-	case 1:
-		return max(a, b, size);
-		break;
-	case 2:
-		return min(a, b, size);
-		break;
-	case 3:
-		return avg(a, b, size);
-		break;
-	default:
-		break;
-	}
-	return 0;
-
+	return func(a,b,size_A,size_B);
 }
