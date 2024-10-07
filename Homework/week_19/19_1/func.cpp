@@ -7,27 +7,19 @@ std::string GetPlates(const Car& car)
 
 void CheckFields(Car& car)
 {
-	if (car.plates.plateNum != -1)
+	if (isdigit(car.plate[0]))
 	{
-		while (car.plates.plateNum < 10000 || car.plates.plateNum > 99999)
+		while (car.plate < 10000 || car.plates.plateNum > 99999)
 		{
 			std::cout << "Введено неверное значение! (10000 - 99999)" << "\nПопробуйте еще раз" << std::endl;
 			std::cout << ": ";
-			std::cin >> car.plates.plateNum;
+			std::cin >> car.plate;
 		}
 	}
 	else
 	{
-		std::string tmp = car.plates.plateWord;
-		while (tmp.size() < 1 || tmp.size() > 8)
-		{
-			std::cout << "Введено неверное значение! (Длина слова до 8 букв)" << "\nПопробуйте еще раз" << std::endl;
-			std::cout << ": ";
-			std::cin >> tmp;
-		}
-		delete[] car.plates.plateWord;
-		car.plates.plateWord = new char[tmp.length() + 1];
-		strcpy(car.plates.plateWord, tmp.c_str());
+		while (car.plate.length() < 1 || car.plate.length() >8)
+		std::cin >> car.plate;
 	}
 }
 
@@ -35,8 +27,7 @@ void ClearFields(Car& car)
 {
 	car.color = "";
 	car.model = "";
-	car.plates.plateNum = -1;
-	car.plates.plateWord[0] = '-';
+	car.plate = "";
 }
 
 void InitCar(Car& car)
@@ -61,25 +52,12 @@ void SetPlates(Car& car)
 		std::cin >> choice;
 	}
 
-	if (choice == 1)
-	{
-		std::cout << "Введите 5-тизначное число: ";
-		std::cin >> car.plates.plateNum;
-		car.plates.plateWord[0] = '-';
-		CheckFields(car);
-	}
-	else
-	{
-		std::cout << "Введите слово длиной до 8 букв: ";
-		std::string tmp;
-		std::cin >> tmp;
-		delete[] car.plates.plateWord;
-		car.plates.plateWord = new char[tmp.length() + 1];
-		strcpy(car.plates.plateWord, tmp.c_str());
-		car.plates.plateNum = -1;
-		std::cout << tmp << *car.plates.plateWord << " " << car.plates.plateNum << std::endl;
-		CheckFields(car);
-	}
+	std::cout << (choice == 1)
+		? "Введите 5-тизначное число: "
+		: "Введите слово длиной до 8 букв: ";
+
+	std::cin >> car.plate;
+	CheckFields(car);
 }
 
 void SetColor(Car& car)

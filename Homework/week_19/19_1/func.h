@@ -9,12 +9,7 @@ struct Car
 {
 	std::string color;
 	std::string model;
-
-	union CarPlate
-	{
-		char* plateWord = new char[9];
-		int plateNum;
-	} plates;
+	std::string plate;
 };
 
 void ClearFields(Car& car);
