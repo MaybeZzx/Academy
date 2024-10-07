@@ -2,9 +2,7 @@
 
 std::string GetPlates(const Car& car)
 {
-	return car.plates.plateNum
-		? std::to_string(car.plates.plateNum)
-		: car.plates.plateWord;
+	return (car.plates.plateNum == -1)? car.plates.plateWord : std::to_string(car.plates.plateNum);
 }
 
 void CheckFields(Car& car)
@@ -27,7 +25,9 @@ void CheckFields(Car& car)
 			std::cout << ": ";
 			std::cin >> tmp;
 		}
-		car.plates.plateWord = tmp.c_str();
+		delete[] car.plates.plateWord;
+		car.plates.plateWord = new char[tmp.length() + 1];
+		strcpy(car.plates.plateWord, tmp.c_str());
 	}
 }
 
@@ -35,8 +35,8 @@ void ClearFields(Car& car)
 {
 	car.color = "";
 	car.model = "";
-	car.plates.plateNum = 0;
-	car.plates.plateWord = "";
+	car.plates.plateNum = -1;
+	car.plates.plateWord[0] = '-';
 }
 
 void InitCar(Car& car)
@@ -50,10 +50,10 @@ void SetPlates(Car& car)
 {
 	std::cout << "Выберите тип номера: " << std::endl;
 	std::cout << "1. 5-тизначный" << std::endl;
-	std::cout << "2. Слово из 8 букв" << "\n: ";
+	std::cout << "2. Слово до 8 букв" << "\n: ";
 	int choice;
 	std::cin >> choice;
-
+	
 	while (choice < 1 || choice > 2)
 	{
 		std::cout << "Введено неверное значение! Попробуйте еще раз";
@@ -65,6 +65,7 @@ void SetPlates(Car& car)
 	{
 		std::cout << "Введите 5-тизначное число: ";
 		std::cin >> car.plates.plateNum;
+		car.plates.plateWord[0] = '-';
 		CheckFields(car);
 	}
 	else
@@ -72,7 +73,11 @@ void SetPlates(Car& car)
 		std::cout << "Введите слово длиной до 8 букв: ";
 		std::string tmp;
 		std::cin >> tmp;
-		car.plates.plateWord = tmp.c_str();
+		delete[] car.plates.plateWord;
+		car.plates.plateWord = new char[tmp.length() + 1];
+		strcpy(car.plates.plateWord, tmp.c_str());
+		car.plates.plateNum = -1;
+		std::cout << tmp << *car.plates.plateWord << " " << car.plates.plateNum << std::endl;
 		CheckFields(car);
 	}
 }
@@ -155,7 +160,9 @@ void ChangePlates(Car& car)
 	std::cout << "Введите новый номер: ";
 	std::string tmp;
 	std::cin >> tmp;
-	car.plates.plateWord = tmp.c_str();
+	delete[] car.plates.plateWord;
+	car.plates.plateWord = new char[tmp.length() + 1];
+	strcpy(car.plates.plateWord, tmp.c_str());
 	CheckFields(car);
 }
 

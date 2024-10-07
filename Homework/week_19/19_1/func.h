@@ -4,16 +4,17 @@
 #include <vector>
 
 
-union CarPlate
-{
-	const char* plateWord;
-	int plateNum = -1;
-};
+
 struct Car
 {
 	std::string color;
 	std::string model;
-	CarPlate plates;
+
+	union CarPlate
+	{
+		char* plateWord = new char[9];
+		int plateNum;
+	} plates;
 };
 
 void ClearFields(Car& car);

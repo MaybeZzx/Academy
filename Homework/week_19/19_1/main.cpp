@@ -24,4 +24,10 @@ int main()
 	int idx = SearchCar(cars, plate);
 	std::cout << "Индекс найденной машины: " << idx << std::endl;
 	Print(cars[idx]);
+
+	for (int i = 0; i < cars.size(); ++i)
+	{
+		delete[] cars[i].plates.plateWord;
+	}
+
 }
