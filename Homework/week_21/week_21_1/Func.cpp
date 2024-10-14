@@ -21,23 +21,42 @@ void CompareFiles(std::string first,
 	std::vector<std::string> firstBuff = LoadFromFile(first);
 	std::vector<std::string> secondBuff = LoadFromFile(second);
 
-	for (size_t i = 0; i < firstBuff.size(); ++i)
+	int countOfDifference = 0;
+	if (firstBuff.size() > secondBuff.size())
 	{
-		if (i > secondBuff.size())
+		int i = 0;
+		for (i; i < secondBuff.size(); ++i)
 		{
-			std::cout << firstBuff[i] << std::endl;
+			if (firstBuff[i] != secondBuff[i])
+			{
+				std::cout << ++countOfDifference << ". " << firstBuff[i] << " != " << secondBuff[i] << std::endl;
+			}
 		}
-		if (firstBuff[i] != secondBuff[i])
+		for (i; i < firstBuff.size(); ++i)
 		{
-			std::cout << "1. " << firstBuff[i] << std::endl;
-			std::cout << "2. " << secondBuff[i] << std::endl;
+			std::cout << ++countOfDifference << ". " << firstBuff[i] << std::endl;
+		}
+	}
+	else
+	{
+		int i = 0;
+		for (i; i < firstBuff.size(); ++i)
+		{
+			if (firstBuff[i] != secondBuff[i])
+			{
+				std::cout << ++countOfDifference << ". " << firstBuff[i] << " != " << secondBuff[i] << std::endl;
+			}
+		}
+		for (i; i < firstBuff.size(); ++i)
+		{
+			std::cout << ++countOfDifference << ". " << firstBuff[i] << std::endl;
 		}
 	}
 }
 
 void Display(std::string fileName)
 {
-	std::ifstream file("text1.txt");
+	std::ifstream file(fileName);
 	std::string line;
 	if (file.is_open())
 	{
