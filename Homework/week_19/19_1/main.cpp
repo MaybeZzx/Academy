@@ -13,6 +13,7 @@ int main()
 		InitCar(tmpCar);
 		cars.push_back(tmpCar);
 		std::cout << std::endl;
+		Print(cars[0]);
 		ClearFields(tmpCar);
 	}
 	PrintCars(cars);
@@ -27,7 +28,7 @@ int main()
 
 	for (int i = 0; i < cars.size(); ++i)
 	{
-		delete[] cars[i].plates.plateWord;
+		delete[] cars[i].plates.platesWord;
 	}
 
 }

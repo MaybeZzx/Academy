@@ -4,12 +4,17 @@
 #include <vector>
 
 
-
+union MyPlate
+{
+	const char* platesWord = new char[8];
+	int platesNum;
+};
 struct Car
 {
+	MyPlate plates;
 	std::string color;
 	std::string model;
-	std::string plate;
+	
 };
 
 void ClearFields(Car& car);
@@ -23,4 +28,4 @@ void EditCar(Car& car);
 void ChangeColor(Car& car);
 void ChangeModel(Car& car);
 void ChangePlates(Car& car);
-int SearchCar(const std::vector<Car>& cars, const std::string plates);
+int SearchCar(const std::vector<Car>& cars, const std::string& plates);
