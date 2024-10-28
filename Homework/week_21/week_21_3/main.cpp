@@ -11,8 +11,6 @@ int main()
 
 
 	setlocale(LC_ALL, "rus");
-	SetConsoleCP(1251);
-	SetConsoleOutputCP(1251);
 	std::string file = "text1.txt";
 	Encrypt(file, 3);
 }
